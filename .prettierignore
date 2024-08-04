@@ -1,0 +1,8 @@
+src/assets
+*.scss
+.output
+
+# Expo
+.expo/
+dist/
+web-build/

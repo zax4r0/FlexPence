@@ -1,0 +1,7 @@
+dist
+.output
+
+# Expo
+.expo/
+dist/
+web-build/
