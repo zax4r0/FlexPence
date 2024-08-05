@@ -1,14 +1,14 @@
 {
-  "root": true,
-  "extends": ["plugin:prettier/recommended"],
-  "rules": {
-    "vue/multi-word-component-names": "off",
-    "vue/no-multiple-template-root": "off",
-    "@typescript-eslint/no-unused-vars": "off",
-    "no-console": "off",
-    "vue/no-export-in-script-setup": "off",
-    "vue/require-default-prop": "off",
-    "vue/valid-define-props": "off",
-    "vue/no-v-html": "off"
-  }
+    "root": true,
+    "extends": ["plugin:prettier/recommended"],
+    "rules": {
+        "vue/multi-word-component-names": "off",
+        "vue/no-multiple-template-root": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "no-console": "off",
+        "vue/no-export-in-script-setup": "off",
+        "vue/require-default-prop": "off",
+        "vue/valid-define-props": "off",
+        "vue/no-v-html": "off"
+    }
 }

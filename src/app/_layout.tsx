@@ -17,111 +17,111 @@ import { useAppState } from '@/hooks/useAppState'
 import { useOnlineManager } from '@/hooks/useOnlineManager'
 
 const LIGHT_THEME: Theme = {
-  dark: false,
-  colors: NAV_THEME.light
+    dark: false,
+    colors: NAV_THEME.light
 }
 const DARK_THEME: Theme = {
-  dark: true,
-  colors: NAV_THEME.dark
+    dark: true,
+    colors: NAV_THEME.dark
 }
 
 export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary
+    // Catch any errors thrown by the Layout component.
+    ErrorBoundary
 } from 'expo-router'
 
 export const unstable_settings = {
-  // Ensure any route can link back to `/`
-  initialRouteName: 'index'
+    // Ensure any route can link back to `/`
+    initialRouteName: 'index'
 }
 
 const createQueryClient = () =>
-  new QueryClient({
-    defaultOptions: { queries: { retry: 2 } }
-  })
+    new QueryClient({
+        defaultOptions: { queries: { retry: 2 } }
+    })
 
 let clientQueryClientSingleton: QueryClient | undefined = undefined
 const getQueryClient = () => {
-  if (typeof window === 'undefined') {
-    // Server: always make a new query client
-    return createQueryClient()
-  }
-  // Browser: use singleton pattern to keep the same query client
-  return (clientQueryClientSingleton ??= createQueryClient())
+    if (typeof window === 'undefined') {
+        // Server: always make a new query client
+        return createQueryClient()
+    }
+    // Browser: use singleton pattern to keep the same query client
+    return (clientQueryClientSingleton ??= createQueryClient())
 }
 
 function onAppStateChange(status: AppStateStatus) {
-  // React Query already supports in web browser refetch on window focus by default
-  if (Platform.OS !== 'web') {
-    focusManager.setFocused(status === 'active')
-  }
+    // React Query already supports in web browser refetch on window focus by default
+    if (Platform.OS !== 'web') {
+        focusManager.setFocused(status === 'active')
+    }
 }
 
 // Prevent the splash screen from auto-hiding before getting the color scheme.
 SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
-  useOnlineManager()
-  useAppState(onAppStateChange)
-  const queryClient = getQueryClient()
+    useOnlineManager()
+    useAppState(onAppStateChange)
+    const queryClient = getQueryClient()
 
-  const { colorScheme, setColorScheme, isDarkColorScheme } = useColorScheme()
-  const [isColorSchemeLoaded, setIsColorSchemeLoaded] = useState(false)
-  const [loaded] = useFonts({
-    SpaceMono: require('../../assets/fonts/GeistMono-Regular.ttf'),
-    Ionicons: require('../../assets/fonts/Ionicons.ttf'),
-    ...AntIcon.font,
-    ...FontAwesome.font,
-    ...Ionicon.font
-  })
-
-  useEffect(() => {
-    const loadTheme = async () => {
-      const theme = await AsyncStorage.getItem('theme')
-
-      if (Platform.OS === 'web') {
-        document.documentElement.classList.add('bg-background')
-      }
-
-      if (!theme) {
-        await AsyncStorage.setItem('theme', colorScheme)
-      } else {
-        const colorTheme = theme === 'dark' ? 'dark' : 'light'
-        if (colorTheme !== colorScheme) {
-          setColorScheme(colorTheme)
-        }
-      }
-
-      setIsColorSchemeLoaded(true)
-    }
-
-    loadTheme().finally(() => {
-      SplashScreen.hideAsync()
+    const { colorScheme, setColorScheme, isDarkColorScheme } = useColorScheme()
+    const [isColorSchemeLoaded, setIsColorSchemeLoaded] = useState(false)
+    const [loaded] = useFonts({
+        SpaceMono: require('../../assets/fonts/GeistMono-Regular.ttf'),
+        Ionicons: require('../../assets/fonts/Ionicons.ttf'),
+        ...AntIcon.font,
+        ...FontAwesome.font,
+        ...Ionicon.font
     })
-  }, [])
 
-  useEffect(() => {
-    if (!onlineManager.isOnline()) {
-      ToastAndroid.show('Look you are offline!', ToastAndroid.SHORT)
+    useEffect(() => {
+        const loadTheme = async () => {
+            const theme = await AsyncStorage.getItem('theme')
+
+            if (Platform.OS === 'web') {
+                document.documentElement.classList.add('bg-background')
+            }
+
+            if (!theme) {
+                await AsyncStorage.setItem('theme', colorScheme)
+            } else {
+                const colorTheme = theme === 'dark' ? 'dark' : 'light'
+                if (colorTheme !== colorScheme) {
+                    setColorScheme(colorTheme)
+                }
+            }
+
+            setIsColorSchemeLoaded(true)
+        }
+
+        loadTheme().finally(() => {
+            SplashScreen.hideAsync()
+        })
+    }, [])
+
+    useEffect(() => {
+        if (!onlineManager.isOnline()) {
+            ToastAndroid.show('Look you are offline!', ToastAndroid.SHORT)
+        }
+    }, [onlineManager.isOnline])
+
+    if (!isColorSchemeLoaded || !loaded) {
+        return null
     }
-  }, [onlineManager.isOnline])
 
-  if (!isColorSchemeLoaded || !loaded) {
-    return null
-  }
-
-  return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
-        <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
-        <GestureHandlerRootView style={{ flex: 1 }}>
-          <Stack>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="(profile)" options={{ headerShown: false }} />
-          </Stack>
-        </GestureHandlerRootView>
-      </ThemeProvider>
-    </QueryClientProvider>
-  )
+    return (
+        <QueryClientProvider client={queryClient}>
+            <ThemeProvider value={isDarkColorScheme ? DARK_THEME : LIGHT_THEME}>
+                <StatusBar style={isDarkColorScheme ? 'light' : 'dark'} />
+                <GestureHandlerRootView style={{ flex: 1 }}>
+                    <Stack>
+                        <Stack.Screen name="index" options={{ headerShown: false }} />
+                        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                        <Stack.Screen name="(profile)" options={{ headerShown: false }} />
+                    </Stack>
+                </GestureHandlerRootView>
+            </ThemeProvider>
+        </QueryClientProvider>
+    )
 }

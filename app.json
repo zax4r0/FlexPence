@@ -1,44 +1,42 @@
 {
-  "expo": {
-    "name": "FlexPence",
-    "slug": "FlexPence",
-    "version": "1.0.0",
-    "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "automatic",
-    "scheme": "myapp",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.zax4r0.FlexPence"
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.zax4r0.FlexPence"
-    },
-    "plugins": [
-      "expo-router"
-    ],
-    "web": {
-      "favicon": "./assets/favicon.png"
-    },
-    "experiments": {
-      "typedRoutes": true
-    },
-    "extra": {
-      "router": {
-        "origin": false
-      },
-      "eas": {
-        "projectId": "ffa7ccdd-78b2-4840-81f1-cbe4d5ad363d"
-      }
+    "expo": {
+        "name": "FlexPence",
+        "slug": "FlexPence",
+        "version": "1.0.0",
+        "orientation": "portrait",
+        "icon": "./assets/icon.png",
+        "userInterfaceStyle": "automatic",
+        "scheme": "myapp",
+        "splash": {
+            "image": "./assets/splash.png",
+            "resizeMode": "contain",
+            "backgroundColor": "#ffffff"
+        },
+        "ios": {
+            "supportsTablet": true,
+            "bundleIdentifier": "com.zax4r0.FlexPence"
+        },
+        "android": {
+            "adaptiveIcon": {
+                "foregroundImage": "./assets/adaptive-icon.png",
+                "backgroundColor": "#ffffff"
+            },
+            "package": "com.zax4r0.FlexPence"
+        },
+        "plugins": ["expo-router"],
+        "web": {
+            "favicon": "./assets/favicon.png"
+        },
+        "experiments": {
+            "typedRoutes": true
+        },
+        "extra": {
+            "router": {
+                "origin": false
+            },
+            "eas": {
+                "projectId": "ffa7ccdd-78b2-4840-81f1-cbe4d5ad363d"
+            }
+        }
     }
-  }
 }
