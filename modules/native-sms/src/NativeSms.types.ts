@@ -7,3 +7,8 @@ export type SMSMessage = {
     thread: number
     service: string
 }
+
+export interface MessageResponse {
+    sender: string
+    messages: SMSMessage[]
+}

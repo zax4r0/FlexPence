@@ -5,7 +5,6 @@ import android.net.Uri
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
 
-
 data class SMSMessage(
     val message: String,
     val sender: String,
@@ -44,7 +43,14 @@ class NativeSmsModule : Module() {
         val context = appContext.reactContext ?: return emptyList()
         val inboxMessages = readMessages(context, "inbox")
         val sentMessages = readMessages(context, "sent")
-        return (inboxMessages + sentMessages).map { it.toMap() }
+        return (inboxMessages + sentMessages)
+            .groupBy { it.sender }
+            .map { (sender, messages) ->
+            mapOf(
+                "sender" to sender,
+                "messages" to messages.map { it.toMap() }
+            )
+        }
     }
 
     // @see https://github.com/stevdza-san/ReadSMSDemo/blob/master/app/src/main/java/com/stevdza/san/readsmsdemo/MainScreen.kt#L76

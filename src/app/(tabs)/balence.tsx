@@ -1,79 +1,62 @@
 import React from 'react'
-import { Text } from '@/components/ui/text'
-import { View, ScrollView, StyleSheet, Text as RNText } from 'react-native'
+import { View, ScrollView, Text as RNText, StyleSheet, Pressable } from 'react-native'
 import { useSms } from '@/hooks/useSms'
 import { LoadingIndicator } from '@/components/LoadingIndicator'
 import { ErrorMessage } from '@/components/ErrorMessage'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { Text } from '@/components/ui/text'
+import { SMSMessage } from '@@/modules/native-sms'
+import { Link, router } from 'expo-router'
+
+const MessageDetail = ({ msg }: { msg: SMSMessage }) => (
+    <Card className={`mb-4 ${msg.read ? 'bg-blue-200' : 'bg-[inherit]'} shadow-md`}>
+        <CardHeader>
+            <CardTitle>{msg.sender}</CardTitle>
+            <CardDescription>{msg.date}</CardDescription>
+        </CardHeader>
+        <CardContent>
+            <Text>{msg.message}</Text>
+        </CardContent>
+        <CardFooter>
+            <Text>{msg.read ? 'Read' : 'Unread'}</Text>
+            <Text>{msg.type}</Text>
+            <Text>{msg.service}</Text>
+            <Text>{msg.thread}</Text>
+        </CardFooter>
+    </Card>
+)
 
 export default function BalanceScreen() {
-    const { smsList, error, loading } = useSms()
+    const { smsList, error, isLoading } = useSms()
 
     return (
-        <View style={styles.container}>
-            {loading ? (
+        <View className="flex-1 p-4">
+            {isLoading ? (
                 <LoadingIndicator />
             ) : error ? (
                 <ErrorMessage error={error} />
             ) : (
-                // <ScrollView>
-                //     {smsList.map((msg, index) => (
-                //         <View key={index} style={styles.messageContainer}>
-                //             <Text>
-                //                 <Text style={styles.labelTitle}>Sender:</Text> {msg.sender}
-                //             </Text>
-                //             <Text>
-                //                 <Text style={styles.labelTitle}>Date:</Text> {new Date(msg.date).toLocaleString()}
-                //             </Text>
-                //             <Text>
-                //                 <Text style={styles.labelTitle}>Message:</Text> {msg.message}
-                //             </Text>
-                //             <Text>
-                //                 <Text style={styles.labelTitle}>Read:</Text> {msg.read ? 'Yes' : 'No'}
-                //             </Text>
-                //             <Text>
-                //                 <Text style={styles.labelTitle}>Type:</Text> {msg.type}
-                //             </Text>
-                //             <Text>
-                //                 <Text style={styles.labelTitle}>Thread:</Text> {msg.thread}
-                //             </Text>
-                //             <Text>
-                //                 <Text style={styles.labelTitle}>Service:</Text> {msg.service}
-                //             </Text>
-                //         </View>
-                //     ))}
-                // </ScrollView>
-                <Text>{smsList.length}</Text>
+                <ScrollView>
+                    {smsList?.map((msg, index) => (
+                        <Card key={index} className="mb-4">
+                            <Pressable
+                                onPress={() =>
+                                    router.push({
+                                        pathname: '/(message-details)/[slug]',
+                                        params: { slug: msg.sender }
+                                    })
+                                }
+                            >
+                                <CardHeader>
+                                    <CardTitle>{msg.sender}</CardTitle>
+                                </CardHeader>
+                                <CardContent></CardContent>
+                            </Pressable>
+                        </Card>
+                    ))}
+                    <RNText className="text-center text-gray-500">{smsList?.length} Messages</RNText>
+                </ScrollView>
             )}
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 16
-    },
-    button: {
-        backgroundColor: '#007bff',
-        padding: 10,
-        borderRadius: 5,
-        alignItems: 'center',
-        marginBottom: 16
-    },
-    buttonText: {
-        color: '#fff',
-        fontSize: 16
-    },
-    messageContainer: {
-        marginBottom: 16,
-        padding: 16,
-        borderRadius: 8
-    },
-    label: {
-        marginBottom: 4,
-        fontSize: 14
-    },
-    labelTitle: {
-        fontWeight: 'bold'
-    }
-})

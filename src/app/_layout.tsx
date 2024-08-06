@@ -15,6 +15,7 @@ import Ionicon from '@expo/vector-icons/Ionicons'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { useAppState } from '@/hooks/useAppState'
 import { useOnlineManager } from '@/hooks/useOnlineManager'
+import { PortalHost } from '@rn-primitives/portal'
 
 const LIGHT_THEME: Theme = {
     dark: false,
@@ -119,7 +120,9 @@ export default function RootLayout() {
                         <Stack.Screen name="index" options={{ headerShown: false }} />
                         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
                         <Stack.Screen name="(profile)" options={{ headerShown: false }} />
+                        <Stack.Screen name="(message-details)" options={{ headerShown: false }} />
                     </Stack>
+                    <PortalHost />
                 </GestureHandlerRootView>
             </ThemeProvider>
         </QueryClientProvider>

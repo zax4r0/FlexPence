@@ -1,7 +1,7 @@
 import NativeSmsModule from './src/NativeSmsModule'
-import { SMSMessage } from './src/NativeSms.types'
+import { MessageResponse, SMSMessage } from './src/NativeSms.types'
 
-export function helloWorld(): Promise<SMSMessage[]> {
+export function helloWorld(): Promise<MessageResponse[]> {
     return NativeSmsModule.helloWorld()
 }
 
@@ -13,4 +13,4 @@ export async function readSMSAsync() {
     return await NativeSmsModule.readSMSAsync()
 }
 
-export { SMSMessage }
+export { SMSMessage, MessageResponse }
