@@ -7,6 +7,8 @@ import { AlertTriangle } from '@/lib/icons/AlertTriangle'
 import { router } from 'expo-router'
 import { PermissionsAndroid } from 'react-native'
 import { LoadingIndicator } from '@/components/LoadingIndicator'
+import { isSmsBackgroundTaskRegisteredAsync, registerBackgroundFetchAsync } from '@/tasks/sms'
+import log from '@/lib/logger'
 
 export default function App() {
     const permissions = [PermissionsAndroid.PERMISSIONS.RECEIVE_SMS, PermissionsAndroid.PERMISSIONS.READ_SMS]
@@ -27,11 +29,15 @@ export default function App() {
     }, [])
 
     const handleRequestPermissions = async () => {
+        const isRegistered = await isSmsBackgroundTaskRegisteredAsync()
         const granted = await requestPermissions({
             permissions,
-            callback: () => {
-                console.log('Permissions granted! Redirecting...')
+            callback: async () => {
+                log.info('Permissions granted! Redirecting...')
                 setPermissionsGranted(true)
+                if (!isRegistered) {
+                    await registerBackgroundFetchAsync()
+                }
                 router.replace('/(tabs)')
             }
         })

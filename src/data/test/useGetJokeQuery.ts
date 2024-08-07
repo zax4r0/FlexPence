@@ -4,7 +4,7 @@ import TestService, { TEST_ENDPOINTS } from './test.service'
 export function useGetJokeQuery(slug: string) {
     const jokeQuery = useQuery({
         queryKey: [TEST_ENDPOINTS.joke(slug)],
-        queryFn: () => TestService.get(slug)
+        queryFn: async () => (await TestService.get(slug)).data
     })
 
     return {

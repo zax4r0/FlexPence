@@ -48,29 +48,44 @@ export class HttpClient {
         )
     }
 
-    async get<T>(url: string, params?: unknown): Promise<T> {
+    async get<T>(url: string, params?: unknown): Promise<AxiosResponse<T>> {
         const response = await this.instance.get<T>(url, { params })
-        return response.data
+        return {
+            ...response,
+            data: response.data as T
+        }
     }
 
-    async post<T>(url: string, data: unknown, options?: AxiosRequestConfig): Promise<T> {
+    async post<T>(url: string, data: unknown, options?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
         const response = await this.instance.post<T>(url, data, options)
-        return response.data
+        return {
+            ...response,
+            data: response.data as T
+        }
     }
 
-    async put<T>(url: string, data: unknown, options?: AxiosRequestConfig): Promise<T> {
+    async put<T>(url: string, data: unknown, options?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
         const response = await this.instance.put<T>(url, data, options)
-        return response.data
+        return {
+            ...response,
+            data: response.data as T
+        }
     }
 
-    async patch<T>(url: string, data: unknown, options?: AxiosRequestConfig): Promise<T> {
+    async patch<T>(url: string, data: unknown, options?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
         const response = await this.instance.patch<T>(url, data, options)
-        return response.data
+        return {
+            ...response,
+            data: response.data as T
+        }
     }
 
-    async delete<T>(url: string, options?: AxiosRequestConfig): Promise<T> {
+    async delete<T>(url: string, options?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
         const response = await this.instance.delete<T>(url, options)
-        return response.data
+        return {
+            ...response,
+            data: response.data as T
+        }
     }
 }
 

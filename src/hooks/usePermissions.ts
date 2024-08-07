@@ -1,3 +1,4 @@
+import log from '@/lib/logger'
 import { PermissionsAndroid, Permission, Alert, BackHandler, Linking } from 'react-native'
 
 const allPermissions: Permission[] = [
@@ -43,7 +44,7 @@ const usePermissions = () => {
 
             return allGranted
         } catch (error) {
-            console.error('Error checking permissions:', error)
+            log.error('Error checking permissions:', error)
             return false // Return false if there's an error checking permissions
         }
     }
@@ -73,11 +74,11 @@ const usePermissions = () => {
             const allMandatoryGranted = permissions.every((permission) => granted.includes(permission))
 
             if (allMandatoryGranted) {
-                console.log('All mandatory permissions are granted.')
+                log.info('All mandatory permissions are granted.')
 
                 // Optionally handle granted permissions
                 if (optionalPermissions.length > 0) {
-                    console.log(
+                    log.info(
                         'Optional permissions granted:',
                         granted.filter((permission) => optionalPermissions.includes(permission))
                     )
@@ -87,7 +88,7 @@ const usePermissions = () => {
                 return true
             } else {
                 // Handle denied permissions scenario
-                console.warn('Some mandatory permissions are not granted.')
+                log.error('Some mandatory permissions are not granted.')
                 Alert.alert(
                     'Permissions Required',
                     'The app may not function correctly without the required permissions. Please grant them from settings.',
@@ -98,7 +99,7 @@ const usePermissions = () => {
                 )
             }
         } catch (error) {
-            console.error('Error requesting permissions:', error)
+            log.error('Error requesting permissions:', error)
             Alert.alert(
                 'Something went wrong',
                 'Could not request permissions. Please try again.',
@@ -122,7 +123,7 @@ const usePermissions = () => {
             )
             return pArray
         } catch (error) {
-            console.error('Error checking permissions:', error)
+            log.error('Error checking permissions:', error)
         }
         return []
     }

@@ -46,12 +46,15 @@
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.1.1",
         "expo": "~51.0.22",
+        "expo-background-fetch": "^12.0.1",
         "expo-navigation-bar": "^3.0.7",
         "expo-router": "^3.5.18",
         "expo-status-bar": "~1.12.1",
         "expo-system-ui": "^3.0.7",
+        "expo-task-manager": "^11.8.2",
         "lucide-react-native": "^0.414.0",
         "nativewind": "4.0.35",
+        "pino": "^9.3.2",
         "react": "18.2.0",
         "react-native": "0.74.3",
         "react-native-gesture-handler": "~2.16.1",
@@ -60,7 +63,8 @@
         "react-native-svg": "15.2.0",
         "tailwind-merge": "^2.4.0",
         "tailwindcss": "^3.4.6",
-        "tailwindcss-animate": "^1.0.7"
+        "tailwindcss-animate": "^1.0.7",
+        "zod": "^3.23.8"
     },
     "devDependencies": {
         "@babel/core": "^7.24.9",

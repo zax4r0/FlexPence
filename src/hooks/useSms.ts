@@ -3,6 +3,7 @@ import { PermissionsAndroid, Linking, Alert, BackHandler } from 'react-native'
 import { useQuery } from '@tanstack/react-query'
 import usePermissions from './usePermissions'
 import { readSMSAsync, type MessageResponse } from '@@/modules/native-sms'
+import log from '@/lib/logger'
 
 // Function to fetch SMS messages
 const fetchSmsMessages = async (): Promise<MessageResponse[]> => {
@@ -49,7 +50,7 @@ export const useSms = () => {
                     }
                 }
             } catch (error) {
-                console.error('An error occurred while checking permissions:', error)
+                log.error('An error occurred while checking permissions:', error)
                 Alert.alert('Error', 'An error occurred while checking permissions')
             }
         }
