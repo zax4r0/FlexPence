@@ -1,46 +1,44 @@
 {
-  "cli": {
-    "version": ">= 10.2.1"
-  },
-  "build": {
-    "development": {
-      "developmentClient": true,
-      "distribution": "internal"
+    "cli": {
+        "version": ">= 10.2.1"
     },
-    "preview": {
-      "distribution": "internal",
-      "android": {
-        "buildType": "apk"
-      }
+    "build": {
+        "development": {
+            "developmentClient": true,
+            "distribution": "internal"
+        },
+        "preview": {
+            "distribution": "internal",
+            "android": {
+                "buildType": "apk"
+            }
+        },
+        "preview2": {
+            "android": {
+                "gradleCommand": ":app:assembleRelease"
+            }
+        },
+        "preview3": {
+            "developmentClient": true
+        },
+        "preview4": {
+            "distribution": "internal"
+        },
+        "preview5": {
+            "distribution": "internal"
+        },
+        "production": {
+            "distribution": "internal",
+            "android": {
+                "image": "latest",
+                "buildType": "apk"
+            },
+            "ios": {
+                "image": "latest"
+            }
+        }
     },
-    "preview2": {
-      "android": {
-        "gradleCommand": ":app:assembleRelease"
-      }
-    },
-    "preview3": {
-      "developmentClient": true
-    },
-    "preview4": {
-      "distribution": "internal"
-    },
-    "preview5": {
-      "distribution": "internal",
-      "env": {
-        "ANDROID_HOME": "/home/zax4r0/Android/Sdk/"
-      }
-    },
-    "production": {
-      "distribution": "internal",
-      "android": {
-        "image": "latest"
-      },
-      "ios": {
-        "image": "latest"
-      }
+    "submit": {
+        "production": {}
     }
-  },
-  "submit": {
-    "production": {}
-  }
 }
