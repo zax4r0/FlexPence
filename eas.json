@@ -32,13 +32,11 @@
     },
     "production": {
       "distribution": "internal",
-      "production": {
-        "android": {
-          "image": "latest"
-        },
-        "ios": {
-          "image": "latest"
-        }
+      "android": {
+        "image": "latest"
+      },
+      "ios": {
+        "image": "latest"
       }
     }
   },
